@@ -10,4 +10,6 @@ int main(int argc, char* argv[]){
 	std::string learnfile = argv[1];
 	Pcfg pcfg = Pcfg();
 	pcfg.learn(learnfile);
+	pcfg.dump("rockyou.bin");
+	// pcfg.load("rockyou.bin");
 }

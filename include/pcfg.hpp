@@ -1,6 +1,7 @@
 #ifndef PCFG_H
 #define PCFG_H
 
+#include <fstream>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -11,6 +12,57 @@ typedef std::pair<char, int> Base;
 typedef std::vector<Base> Structure;
 // i.e. L8 -> password, ...
 typedef std::pair<Base, std::string> Rule;
+
+inline std::ostream& operator<<(std::ostream& os, const Base& b){
+	os << b.first << b.second;
+	return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Structure& s){
+	std::vector<Base>::const_iterator it = s.begin();
+	for(; it != s.end(); it++){
+		os << (*it).first << (*it).second;
+	}
+	return os;
+}
+
+inline std::ifstream& operator>>(std::ifstream& ifs, Structure& s){
+	std::string line;
+	ifs >> line;
+	unsigned int lptr = 0;
+	while(lptr < line.length()){
+		Base b;
+		b.first = line[lptr++];
+		unsigned int nptr = 0;
+		while(line[lptr+nptr] <= '9' && line[lptr+nptr] >= '0' && lptr+nptr < line.length()){
+			nptr++;
+		}
+		b.second = std::stoi(line.substr(lptr,nptr));
+		lptr += nptr;
+		s.push_back(b);
+	}
+	return ifs;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Rule& r){
+	os << r.first << "->" << r.second;
+	return os;
+}
+
+inline std::ifstream& operator>>(std::ifstream& ifs, Rule& r){
+	std::string line;
+	ifs >> line;
+	Base b;
+	b.first = line[0];
+	unsigned int lptr = 1;
+	while(line[lptr] <= '9' && line[lptr] >= '0'){
+		lptr++;
+	}
+	b.second = std::stoi(line.substr(1,lptr-1));
+	r.first = b;
+	r.second = line.substr(lptr+2);
+	return ifs;
+}
 
 // equality operators to store custom types in hashmaps.
 inline bool operator==(const Base &lhs, const Base &rhs){
@@ -68,11 +120,14 @@ namespace std {
 
 class Pcfg{
 private:
+	int nb_structures = 0;
 	std::unordered_map<Structure, double> structprobs;
 	std::unordered_map<Rule, double> ruleprobs;
 	const Structure parse(const std::string &word) const;
 public:
 	const void learn(const std::string &filename);
+	const void dump(const std::string &filename);
+	const void load(const std::string &filename);
 };
 
 #endif

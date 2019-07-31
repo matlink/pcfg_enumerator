@@ -2,24 +2,6 @@
 #include <iostream>
 #include "pcfg.hpp"
 
-std::ostream& operator<<(std::ostream& os, const Base& b){
-	os << b.first << b.second;
-	return os;
-}
-
-std::ostream& operator<<(std::ostream& os, const Structure& s){
-	std::vector<Base>::const_iterator it = s.begin();
-	for(; it != s.end(); it++){
-		os << (*it).first << (*it).second;
-	}
-	return os;
-}
-
-std::ostream& operator<<(std::ostream& os, const Rule& r){
-	os << r.first << "->" << r.second;
-	return os;
-}
-
 const Structure Pcfg::parse(const std::string &word) const{
 	Structure structure;
 	char c;
@@ -49,7 +31,6 @@ const void Pcfg::learn(const std::string &filename){
 	std::ifstream learnstream(filename);
 	std::string word;
 	Structure structure;
-	int nb_structures = 0;
 	std::unordered_map<Base, int> nb_bases;
 	while (learnstream >> word){
 		structure = parse(word);
@@ -79,14 +60,36 @@ const void Pcfg::learn(const std::string &filename){
 		Base b = rprob.first.first;
 		rprob.second /= nb_bases[b];
 	}
-	// std::unordered_map<Structure, double>::iterator it = structprobs.begin();
-	// while (it != structprobs.end()){
-	// 	std::cout << it->first << " " << it->second << std::endl;
-	// 	it++;
-	// }
-	// std::unordered_map<Rule, double>::iterator it2 = ruleprobs.begin();
-	// while (it2 != ruleprobs.end()){
-	// 	std::cout << it2->first << " " << it2->second << std::endl;
-	// 	it2++;
-	// }
 }	
+
+const void Pcfg::dump(const std::string &filename){
+	std::ofstream dumpstream(filename);
+	dumpstream << structprobs.size() << " " << ruleprobs.size() << std::endl;
+	for(auto &sprob: structprobs){
+		dumpstream << sprob.first << " " << sprob.second << std::endl;
+	}
+	for(auto &rprob: ruleprobs){
+		dumpstream << rprob.first << " " << rprob.second << std::endl;
+	}
+	dumpstream.close();
+}
+
+const void Pcfg::load(const std::string &filename){
+	std::ifstream dumpstream(filename);
+	unsigned int nb_diff_structures;
+	unsigned int nb_diff_terms;
+	dumpstream >> nb_diff_structures >> nb_diff_terms;
+	for(unsigned int i=0; i < nb_diff_structures; i++){
+		Structure s;
+		double prob;
+		dumpstream >> s >> prob;
+		structprobs[s] = prob;
+	}
+	for(unsigned int i=0; i < nb_diff_terms; i++){
+		Rule r;
+		double prob;
+		dumpstream >> r >> prob;
+		ruleprobs[r] = prob;
+	}
+	dumpstream.close();
+}
