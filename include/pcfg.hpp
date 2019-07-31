@@ -7,14 +7,18 @@
 #include <vector>
 
 // i.e. L8, D4, S2
-typedef std::pair<char, int> Base;
+class Base: public std::pair<char, int> {
+public:
+	char type = this->first;
+	int len = this->second;
+};
 // i.e. L8D4S2, ...
 typedef std::vector<Base> Structure;
 // i.e. L8 -> password, ...
 typedef std::pair<Base, std::string> Rule;
 
 inline std::ostream& operator<<(std::ostream& os, const Base& b){
-	os << b.first << b.second;
+	os << b.type << b.len;
 	return os;
 }
 
@@ -32,12 +36,12 @@ inline std::ifstream& operator>>(std::ifstream& ifs, Structure& s){
 	unsigned int lptr = 0;
 	while(lptr < line.length()){
 		Base b;
-		b.first = line[lptr++];
+		b.type = line[lptr++];
 		unsigned int nptr = 0;
 		while(line[lptr+nptr] <= '9' && line[lptr+nptr] >= '0' && lptr+nptr < line.length()){
 			nptr++;
 		}
-		b.second = std::stoi(line.substr(lptr,nptr));
+		b.len = std::stoi(line.substr(lptr,nptr));
 		lptr += nptr;
 		s.push_back(b);
 	}
@@ -53,12 +57,12 @@ inline std::ifstream& operator>>(std::ifstream& ifs, Rule& r){
 	std::string line;
 	ifs >> line;
 	Base b;
-	b.first = line[0];
+	b.type = line[0];
 	unsigned int lptr = 1;
 	while(line[lptr] <= '9' && line[lptr] >= '0'){
 		lptr++;
 	}
-	b.second = std::stoi(line.substr(1,lptr-1));
+	b.len = std::stoi(line.substr(1,lptr-1));
 	r.first = b;
 	r.second = line.substr(lptr+2);
 	return ifs;
@@ -66,7 +70,7 @@ inline std::ifstream& operator>>(std::ifstream& ifs, Rule& r){
 
 // equality operators to store custom types in hashmaps.
 inline bool operator==(const Base &lhs, const Base &rhs){
-	return lhs.first == rhs.first && lhs.second == rhs.second;
+	return lhs.type == rhs.type && lhs.len == rhs.len;
 }
 inline bool operator!=(const Base &lhs, const Base &rhs){
 	return !(lhs==rhs);
@@ -93,8 +97,8 @@ namespace std {
 	template<>
 	struct hash<Base> : public unary_function<Base, size_t> {
 		size_t operator()(const Base& b) const {
-			return (hash<char>()(b.first)
-				^ (hash<int>()(b.second)<<1) >> 1);
+			return (hash<char>()(b.type)
+				^ (hash<int>()(b.len)<<1) >> 1);
 		}
 	};
 	template<>

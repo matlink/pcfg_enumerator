@@ -8,20 +8,20 @@ const Structure Pcfg::parse(const std::string &word) const{
 	Base base;
 	for(unsigned short i=0; i < word.length(); i++){
 		c = word[i];
-		if 		(c >= 'a' && c <= 'z') 	base.first = 'L';
-		else if (c >= 'A' && c <= 'Z') 	base.first = 'L';
-		else if (c >= '0' && c <= '9') 	base.first = 'D';
-		else					  		base.first = 'S';
+		if 		(c >= 'a' && c <= 'z') 	base.type = 'L';
+		else if (c >= 'A' && c <= 'Z') 	base.type = 'L';
+		else if (c >= '0' && c <= '9') 	base.type = 'D';
+		else					  		base.type = 'S';
 		if (structure.size() == 0){
-			base.second = 1;
+			base.len = 1;
 			structure.push_back(base);
 			continue;
 		}
-		if (base.first == structure.back().first){
-			structure.back().second++;
+		if (base.type == structure.back().type){
+			structure.back().len++;
 			continue;
 		}
-		base.second = 1;
+		base.len = 1;
 		structure.push_back(base);
 	}
 	return structure;
@@ -32,19 +32,19 @@ const void Pcfg::learn(const std::string &filename){
 	std::string word;
 	Structure structure;
 	std::unordered_map<Base, int> nb_bases;
+	int w_ptr;
+	std::unordered_map<Base, int>::const_iterator search;
 	while (learnstream >> word){
 		structure = parse(word);
 		structprobs[structure]++;
 		nb_structures++;
-		int w_ptr = 0;
-		int base_len;
+		w_ptr = 0;
 		std::string terminal;
 		for(Base base: structure){
-			base_len = base.second;
-			terminal = word.substr(w_ptr, base_len);
-			w_ptr += base_len;
+			terminal = word.substr(w_ptr, base.len);
+			w_ptr += base.len;
 			ruleprobs[Rule(base,terminal)] += 1;
-			std::unordered_map<Base, int>::const_iterator search = nb_bases.find(base);
+			search = nb_bases.find(base);
 			if(search == nb_bases.end()){
 				nb_bases[base] = 0;
 			}
