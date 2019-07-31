@@ -1,0 +1,7 @@
+image: debian
+
+build-cli:
+  before_script:
+    - apt-get -qq update
+    - apt-get -qq -y install build-essential > /dev/null
+  script: make
