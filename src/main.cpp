@@ -9,7 +9,13 @@ int main(int argc, char* argv[]){
 	}
 	std::string learnfile = argv[1];
 	Pcfg pcfg = Pcfg();
-	pcfg.learn(learnfile);
-	pcfg.dump("rockyou.bin");
-	// pcfg.load("rockyou.bin");
+	bool learn = false;
+	// learn = true;
+	if(learn){
+		pcfg.learn(learnfile);
+		pcfg.dump("rockyou.bin");
+	}
+	else{
+		pcfg.load("rockyou.bin");
+	}
 }
