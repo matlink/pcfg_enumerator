@@ -12,12 +12,7 @@ const Structure Pcfg::parse(const std::string &word) const{
 		else if (c >= 'A' && c <= 'Z') 	base.type = 'L';
 		else if (c >= '0' && c <= '9') 	base.type = 'D';
 		else					  		base.type = 'S';
-		if (structure.size() == 0){
-			base.len = 1;
-			structure.push_back(base);
-			continue;
-		}
-		if (base.type == structure.back().type){
+		if (structure.size() && base.type == structure.back().type){
 			structure.back().len++;
 			continue;
 		}
@@ -57,7 +52,7 @@ const void Pcfg::learn(const std::string &filename){
 		sprob.second /= nb_structures;
 	}
 	for(auto &rprob: ruleprobs){
-		Base b = rprob.first.first;
+		Base b = rprob.first.base;
 		rprob.second /= nb_bases[b];
 	}
 }	
