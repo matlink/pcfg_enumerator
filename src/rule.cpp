@@ -1,6 +1,6 @@
 #include "rule.hpp"
 
-Rule::Rule(Base b, std::string t){
-	this->base = b;
-	this->terminal = t;
+Rule::Rule(const Base &b, const std::string &t){
+	base = b;
+	terminal = t;
 }

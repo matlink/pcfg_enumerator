@@ -1,8 +1,18 @@
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
+#include <vector>
+#include <ostream>
+#include <fstream>
+
+#include "base.hpp"
+
 // i.e. L8D4S2, ...
-typedef std::vector<Base> Structure;
+class Structure: public std::vector<Base> {
+public:
+	Structure(){};
+	Structure(const std::string &word);
+};
 
 inline std::ostream& operator<<(std::ostream& os, const Structure& s){
 	std::vector<Base>::const_iterator it = s.begin();

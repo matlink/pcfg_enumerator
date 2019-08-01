@@ -8,14 +8,13 @@
 #include "base.hpp"
 
 // i.e. L8 -> password, ...
-// typedef std::pair<Base, std::string> Rule;
 class Rule: public std::pair<Base, std::string> {
 public:
-	Base base = this->first;
-	std::string terminal = this->second;
+	Base base = first;
+	std::string terminal = second;
 
 	Rule(){};
-	Rule(Base b, std::string t);
+	Rule(const Base &b, const std::string &t);
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Rule& r){
@@ -37,7 +36,7 @@ inline std::ifstream& operator>>(std::ifstream& ifs, Rule& r){
 	return ifs;
 }
 inline bool operator==(const Rule &lhs, const Rule &rhs){
-	return lhs.first == rhs.first && lhs.second == rhs.second;
+	return lhs.base == rhs.base && lhs.terminal == rhs.terminal;
 }
 inline bool operator!=(const Rule &lhs, const Rule &rhs){
 	return !(lhs == rhs);
@@ -49,9 +48,9 @@ namespace std {
 	template<>
 	struct hash<Rule> : public unary_function<Rule, size_t> {
 		size_t operator()(const Rule& r) const {
-			return (hash<char>()(r.first.first)
-				^ (hash<int>()(r.first.second)<<1) >> 1)
-				^ (hash<string>()(r.second) << 1);
+			return (hash<char>()(r.base.type)
+				^ (hash<int>()(r.base.len)<<1) >> 1)
+				^ (hash<string>()(r.terminal) << 1);
 		}
 	};
 }

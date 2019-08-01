@@ -5,7 +5,7 @@
 class Base: public std::pair<char, int> {
 public:
 	char type = this->first;
-	int len = this->second;
+	unsigned int len = this->second;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Base& b){
