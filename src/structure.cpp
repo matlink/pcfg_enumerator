@@ -19,26 +19,21 @@ Structure::Structure(const std::string &word){
 }
 
 std::ostream& operator<<(std::ostream& os, const Structure& s){
+	os << s.size() << " ";
 	std::vector<Base>::const_iterator it = s.begin();
 	for(; it != s.end(); it++){
-		os << (*it).type << (*it).len;
+		os << (*it).type << " " << (*it).len << " ";
 	}
 	return os;
 }
 
 std::ifstream& operator>>(std::ifstream& ifs, Structure& s){
-	std::string line;
-	ifs >> line;
-	unsigned int lptr = 0;
-	while(lptr < line.length()){
+	unsigned int size;
+	ifs >> size;
+	while(size--){
 		Base b;
-		b.type = line[lptr++];
-		unsigned int nptr = 0;
-		while(line[lptr+nptr] <= '9' && line[lptr+nptr] >= '0' && lptr+nptr < line.length()){
-			nptr++;
-		}
-		b.len = std::stoi(line.substr(lptr,nptr));
-		lptr += nptr;
+		ifs >> b.type;
+		ifs >> b.len;
 		s.push_back(b);
 	}
 	return ifs;
