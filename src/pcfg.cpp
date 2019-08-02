@@ -103,8 +103,9 @@ const void Pcfg::enumerate(){
 		pq.pop();
 		cout << pt << endl;
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
-			pt[pivot];
-			pq.push(pt);
+			if(pt[pivot]){
+				pq.push(pt);
+			}
 		}
 	}
 }
