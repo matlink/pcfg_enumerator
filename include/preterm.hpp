@@ -18,11 +18,11 @@ public:
 	double proba = 0;
 	unsigned int pivot = 0;
 	Ruleranks ruleranks;
-	Preterm(double proba, const Structure &structure, Ruledict ordered_rules);
-	Preterm(double proba, const Structure &structure, unsigned int pivot, Ruleranks ruleranks, Ruledict ordered_rules);
+	Preterm(double proba, const Structure &structure, const Ruledict &ordered_rules);
+	Preterm(double proba, const Structure &structure, unsigned int pivot, Ruleranks ruleranks, const Ruledict &ordered_rules);
 	Preterm(){};
 	unsigned int operator[](const unsigned int pivot);
-	friend std::ostream& operator<<(std::ostream& os, const Preterm& pt);
+	friend std::ostream& operator<<(std::ostream& os, Preterm& pt);
 	friend bool operator<(const Preterm &lhd, const Preterm &rhs);
 };
 

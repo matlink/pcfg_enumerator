@@ -1,12 +1,12 @@
 #include "preterm.hpp"
 
-Preterm::Preterm(double proba, const Structure &structure, Ruledict ordered_rules){
+Preterm::Preterm(double proba, const Structure &structure, const Ruledict &ordered_rules){
 	this->proba = proba;
 	this->structure = structure;
 	this->ordered_rules = ordered_rules;
 }
 
-Preterm::Preterm(double proba, const Structure &structure, unsigned int pivot, Ruleranks ruleranks, Ruledict ordered_rules){
+Preterm::Preterm(double proba, const Structure &structure, unsigned int pivot, Ruleranks ruleranks, const Ruledict &ordered_rules){
 	this->proba = proba;
 	this->structure = structure;
 	this->pivot = pivot;
@@ -15,18 +15,20 @@ Preterm::Preterm(double proba, const Structure &structure, unsigned int pivot, R
 }
 
 unsigned int Preterm::operator[](const unsigned int pivot){
+	unsigned int rank = ruleranks[pivot];
+	Base &b = structure[pivot];
+	double old_proba = ordered_rules[b][rank+0].second;
+	double new_proba = ordered_rules[b][rank+1].second;
+	proba *=  new_proba / old_proba;
 	return ruleranks[pivot]++;
 }
 
-std::ostream& operator<<(std::ostream& os, const Preterm& pt){
-	for(unsigned int pivot=0; pivot < pt.structure.size(); pivot++){
-		// Base b = pt.structure[pivot];
-		Base b;
-		b.type = 'D';
-		b.len = 8;
-		// unsigned int rank = pt.ruleranks[pivot];
-		auto terminal = pt.ordered_rules[b];
-	}
+std::ostream& operator<<(std::ostream& os, Preterm& pt){
+for(unsigned int pivot=0; pivot < pt.structure.size(); pivot++){
+	const Base &b = pt.structure[pivot];
+	unsigned int rank = pt.ruleranks[pivot];
+	os << pt.ordered_rules[b][rank].first.terminal;
+}
 	return os;
 }
 

@@ -11,6 +11,9 @@ public:
 	char type = this->first;
 	unsigned int len = this->second;
 
+	Base(char type, unsigned int len);
+	Base(){};
+
 	friend std::ostream& operator<<(std::ostream& os, const Base& b);
 	friend std::ifstream& operator>>(std::ifstream& ifs, Base& b);
 	bool operator==(const Base &lhs);

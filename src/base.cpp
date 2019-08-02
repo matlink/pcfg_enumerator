@@ -17,3 +17,8 @@ bool Base::operator==(const Base &lhs){
 bool Base::operator!=(const Base &lhs){
 	return !(lhs == (*this));
 }
+
+Base::Base(char type, unsigned int len){
+	this->type = type;
+	this->len = len;
+}
