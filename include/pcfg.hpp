@@ -3,6 +3,8 @@
 
 #include <string>
 #include <unordered_map>
+#include <map>
+#include <algorithm>
 #include <vector>
 
 #include "rule.hpp"
@@ -18,6 +20,22 @@ public:
 	const void learn(const std::string &filename);
 	const void dump(const std::string &filename);
 	const void load(const std::string &filename);
+	const void enumerate();
 };
+
+template<typename A, typename B>
+std::pair<B,A> flip_pair(const std::pair<A,B> &p)
+{
+    return std::pair<B,A>(p.second, p.first);
+}
+
+template<typename A, typename B>
+std::multimap<B,A, std::greater<double>> flip_map(const std::unordered_map<A,B> &src)
+{
+    std::multimap<B,A, std::greater<double>> dst;
+    std::transform(src.begin(), src.end(), std::inserter(dst, dst.begin()), 
+                   flip_pair<A,B>);
+    return dst;
+}
 
 #endif

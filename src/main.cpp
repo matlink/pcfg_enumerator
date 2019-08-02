@@ -18,4 +18,5 @@ int main(int argc, char* argv[]){
 	else{
 		pcfg.load("rockyou.bin");
 	}
+	pcfg.enumerate();
 }
