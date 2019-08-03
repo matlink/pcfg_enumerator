@@ -106,6 +106,7 @@ const void Pcfg::enumerate(){
 		cout << pt << endl;
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
+			newpt.pivot = pivot;
 			if(newpt[pivot]){
 				pq.push(newpt);
 			}

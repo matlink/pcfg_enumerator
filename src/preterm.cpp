@@ -36,13 +36,10 @@ bool Preterm::operator[](const unsigned int pivot){
 }
 
 std::ostream& operator<<(std::ostream& os, Preterm& pt){
-	// os << pt.structure;
 	for(unsigned int pivot=0; pivot < pt.structure.size(); pivot++){
 		const Base &b = pt.structure[pivot];
-		// os << b << " ";
 		unsigned int rank = pt.ruleranks[pivot];
 		Rule r = pt.ordered_rules[b][rank].first;
-		// os << r << " ";
 		os << r.terminal;
 	}
 	return os;
