@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
 	std::string learnfile = argv[1];
 	Pcfg pcfg = Pcfg();
 	bool learn = false;
-	// learn = true;
+	learn = true;
 	if(learn){
 		pcfg.learn(learnfile);
 		pcfg.dump("rockyou.bin");

@@ -10,12 +10,8 @@ std::ifstream& operator>>(std::ifstream& ifs, Base& b){
 	return ifs;
 }
 
-bool Base::operator==(const Base &lhs){
-	return lhs.type == type && lhs.len == len;
-}
-
-bool Base::operator!=(const Base &lhs){
-	return !(lhs == (*this));
+bool operator==(const Base &lhs, const Base &rhs){
+	return lhs.type == rhs.type && lhs.len == rhs.len;
 }
 
 Base::Base(char type, unsigned int len){

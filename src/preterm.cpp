@@ -1,5 +1,13 @@
 #include "preterm.hpp"
 
+Preterm::Preterm(const Preterm &pt){
+	this->proba = pt.proba;
+	this->structure = pt.structure;
+	this->ordered_rules = pt.ordered_rules;
+	this->pivot = pt.pivot;
+	this->ruleranks = pt.ruleranks;
+}
+
 Preterm::Preterm(double proba, const Structure &structure, const Ruledict &ordered_rules){
 	this->proba = proba;
 	this->structure = structure;
@@ -28,10 +36,14 @@ bool Preterm::operator[](const unsigned int pivot){
 }
 
 std::ostream& operator<<(std::ostream& os, Preterm& pt){
+	// os << pt.structure;
 	for(unsigned int pivot=0; pivot < pt.structure.size(); pivot++){
 		const Base &b = pt.structure[pivot];
+		// os << b << " ";
 		unsigned int rank = pt.ruleranks[pivot];
-		os << pt.ordered_rules[b][rank].first.terminal;
+		Rule r = pt.ordered_rules[b][rank].first;
+		// os << r << " ";
+		os << r.terminal;
 	}
 	return os;
 }

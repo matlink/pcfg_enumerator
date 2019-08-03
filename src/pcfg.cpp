@@ -73,19 +73,20 @@ const void Pcfg::load(const string &filename){
 const void Pcfg::enumerate(){
 	priority_queue<Preterm> pq;
 	multimap<double, Structure, greater<double>> ordered_structures = flip_map(structprobs);
-	unordered_map<Base, multimap<double, Rule, greater<double>>> ordered_rules_map;
-	for(auto &ruleprob: ruleprobs){
-		Rule r = ruleprob.first;
-		double proba = ruleprob.second;
-		ordered_rules_map[r.base].insert(pair(proba,r));
-	}
 	Ruledict ordered_rules;
-	for(auto &orm: ordered_rules_map){
-		Base b = orm.first;
-		for(auto &ruleprob: orm.second){
-			ordered_rules[b].push_back(flip_pair(ruleprob));
-		}
+	for(auto &ruleprob: ruleprobs){
+		const Rule &r = ruleprob.first;
+		double proba = ruleprob.second;
+		ordered_rules[r.base].push_back(pair(r, proba));
 	}
+
+	for(auto &baseruleproba: ordered_rules){
+		sort(baseruleproba.second.begin(), baseruleproba.second.end(), [](auto &left, auto &right) {
+    		return left.second < right.second;
+    		}
+    	);
+	}
+
 	for(auto &sp: ordered_structures){
 		Structure &s = sp.second;
 		double proba = sp.first;
@@ -98,13 +99,15 @@ const void Pcfg::enumerate(){
 		pq.push(pt);
 	}
 	Preterm pt;
+	Preterm newpt;
 	while(pq.size()){
 		pt = pq.top();
 		pq.pop();
 		cout << pt << endl;
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
-			if(pt[pivot]){
-				pq.push(pt);
+			newpt = Preterm(pt);
+			if(newpt[pivot]){
+				pq.push(newpt);
 			}
 		}
 	}
