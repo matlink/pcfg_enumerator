@@ -74,6 +74,7 @@ const void Pcfg::enumerate(){
 	priority_queue<Preterm> pq;
 	multimap<double, Structure, greater<double>> ordered_structures = flip_map(structprobs);
 	Ruledict ordered_rules;
+	cerr << "Organizing rules ..." << endl;
 	for(auto &ruleprob: ruleprobs){
 		const Rule &r = ruleprob.first;
 		double proba = ruleprob.second;
@@ -86,7 +87,8 @@ const void Pcfg::enumerate(){
     		}
     	);
 	}
-
+	cerr << "Queue will be size " << ordered_structures.size() << endl;
+	cerr << "Populating Queue ..." << endl;
 	for(auto &sp: ordered_structures){
 		Structure &s = sp.second;
 		double proba = sp.first;
@@ -98,6 +100,7 @@ const void Pcfg::enumerate(){
 		}
 		pq.push(pt);
 	}
+	cerr << "Generating candidates ..." << endl;
 	Preterm pt;
 	Preterm newpt;
 	while(pq.size()){
