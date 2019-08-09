@@ -78,7 +78,7 @@ const void Pcfg::enumerate(){
 	for(auto &ruleprob: ruleprobs){
 		const Rule &r = ruleprob.first;
 		double proba = ruleprob.second;
-		ordered_rules[r.base].push_back(pair(r, proba));
+		ordered_rules[r.base].push_back(pair<Rule, double>(r, proba));
 	}
 
 	for(auto &baseruleproba: ordered_rules){

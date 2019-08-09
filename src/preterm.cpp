@@ -20,9 +20,8 @@ bool Preterm::operator[](const unsigned int pivot){
 	if(rank+1 >= (*ordered_rules)[b].size()){
 		return false;
 	}
-	double old_proba = (*ordered_rules)[b][rank+0].second;
-	double new_proba = (*ordered_rules)[b][rank+1].second;
-	proba *=  new_proba / old_proba;
+	proba /= (*ordered_rules)[b][rank+0].second;
+	proba *= (*ordered_rules)[b][rank+1].second;
 	ruleranks[pivot]++;
 	return true;
 }
