@@ -90,12 +90,11 @@ const void Pcfg::enumerate(){
 	cerr << "Queue will be size " << ordered_structures.size() << endl;
 	cerr << "Populating Queue ..." << endl;
 	for(auto &sp: ordered_structures){
-		Structure &s = sp.second;
+		const Structure &s = sp.second;
 		double proba = sp.first;
-		Preterm pt(proba, s, ordered_rules);
-		for(Base &b: s){
-			pair<Rule, double> &first_rule_prob = ordered_rules[b][0];
-			pt.proba *= first_rule_prob.second;
+		Preterm pt(proba, s, &ordered_rules);
+		for(const Base &b: s){
+			pt.proba *= ordered_rules[b][0].second;
 			pt.ruleranks.push_back(0);
 		}
 		pq.push(pt);
