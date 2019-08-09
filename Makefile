@@ -1,7 +1,7 @@
 INCLDIR	:= include
 SRCDIR	:= src
 CC      := g++
-CFLAGS  := -std=c++17 -Wall -I$(INCLDIR)
+CFLAGS  := -std=c++17 -Wall -I$(INCLDIR) -O3
 
 #Source and object files (automatic)
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
