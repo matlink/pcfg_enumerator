@@ -101,10 +101,15 @@ const void Pcfg::enumerate(){
 
 	Preterm pt;
 	Preterm newpt;
+	cerr << pq.size() << endl;
+	long nb = 0;
 	while(pq.size()){
 		pt = pq.top();
 		pq.pop();
 		cout << pt << endl;
+		nb++;
+		if (nb%10000 == 0)
+			cerr << nb << " " << pq.size() << endl;
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
