@@ -70,7 +70,7 @@ const void Pcfg::load(const string &filename){
 	dumpstream.close();
 }
 
-const void Pcfg::enumerate(){
+const void Pcfg::enumerate(const double prob_limit){
 	priority_queue<Preterm> pq;
 	Ruledict ordered_rules;
 
@@ -92,7 +92,9 @@ const void Pcfg::enumerate(){
 			pt.proba *= ordered_rules[b][0].second;
 			pt.ruleranks.push_back(0);
 		}
-		pq.push(pt);
+		if (pt.proba >= prob_limit){
+			pq.push(pt);
+		}
 	}
 
 	Preterm pt;
@@ -109,7 +111,7 @@ const void Pcfg::enumerate(){
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
-			if(newpt[pivot]){
+			if(newpt[pivot] && newpt.proba >= prob_limit){
 				pq.push(newpt);
 			}
 		}
