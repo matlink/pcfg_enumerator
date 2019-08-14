@@ -97,8 +97,8 @@ const void Pcfg::enumerate(){
 
 	Preterm pt;
 	Preterm newpt;
-	cerr << pq.size() << endl;
 	long nb = 0;
+	cerr << nb << " " << pq.size() << endl;
 	while(pq.size()){
 		pt = pq.top();
 		pq.pop();
