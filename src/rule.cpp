@@ -12,7 +12,7 @@ std::ostream& operator<<(std::ostream& os, const Rule& r){
 
 std::ifstream& operator>>(std::ifstream& ifs, Rule& r){
 	ifs >> r.base;
-	ifs >> r.terminal;
+	getline(ifs, r.terminal);
 	return ifs;
 }
 
