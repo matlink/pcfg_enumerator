@@ -17,6 +17,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Base& b);
 	friend std::ifstream& operator>>(std::ifstream& ifs, Base& b);
 	friend bool operator==(const Base &lhs, const Base &rhs);
+	friend bool operator!=(const Base &lhs, const Base &rhs);
 };
 
 namespace std {

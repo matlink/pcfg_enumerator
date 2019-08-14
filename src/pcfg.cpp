@@ -10,12 +10,11 @@ using namespace std;
 
 const void Pcfg::learn(const string &filename){
 	ifstream learnstream(filename);
-	string word;
 	Structure structure;
 	unordered_map<Base, int> nb_bases;
 	unordered_map<Base, int>::const_iterator search;
 	unsigned int w_ptr;
-	while (learnstream >> word){
+	for (string word; getline(learnstream, word);){
 		Structure structure(word);
 		structprobs[structure]++;
 		nb_structures++;
@@ -72,7 +71,6 @@ const void Pcfg::load(const string &filename){
 
 const void Pcfg::enumerate(){
 	priority_queue<Preterm> pq;
-	multimap<double, Structure, greater<double>> ordered_structures = flip_map(structprobs);
 	Ruledict ordered_rules;
 
 	for(auto &ruleprob: ruleprobs){
@@ -83,16 +81,13 @@ const void Pcfg::enumerate(){
 
 	for(auto &baseruleproba: ordered_rules){
 		sort(baseruleproba.second.begin(), baseruleproba.second.end(), [](auto &left, auto &right) {
-    		return left.second < right.second;
+			return left.second > right.second;
     		}
     	);
 	}
-
-	for(auto &sp: ordered_structures){
-		const Structure &s = sp.second;
-		double proba = sp.first;
-		Preterm pt(proba, s, &ordered_rules);
-		for(const Base &b: s){
+	for(auto &sp: structprobs){
+		Preterm pt(sp.second, sp.first, &ordered_rules);
+		for(const Base &b: sp.first){
 			pt.proba *= ordered_rules[b][0].second;
 			pt.ruleranks.push_back(0);
 		}
