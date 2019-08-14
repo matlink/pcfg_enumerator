@@ -81,13 +81,13 @@ const void Pcfg::enumerate(){
 
 	for(auto &baseruleproba: ordered_rules){
 		sort(baseruleproba.second.begin(), baseruleproba.second.end(), [](auto &left, auto &right) {
-    		return left.second < right.second;
+			return left.second > right.second;
     		}
     	);
 	}
 	for(auto &sp: structprobs){
 		Preterm pt(sp.second, sp.first, &ordered_rules);
-		for(const Base &b: s){
+		for(const Base &b: sp.first){
 			pt.proba *= ordered_rules[b][0].second;
 			pt.ruleranks.push_back(0);
 		}
