@@ -44,7 +44,7 @@ const void Pcfg::dump(const string &filename){
 		dumpstream << sprob.first << " " << sprob.second << endl;
 	}
 	for(auto &rprob: ruleprobs){
-		dumpstream << rprob.first << " " << rprob.second << endl;
+		dumpstream << rprob.second << " " << rprob.first << endl;
 	}
 	dumpstream.close();
 }
@@ -63,7 +63,8 @@ const void Pcfg::load(const string &filename){
 	for(unsigned int i=0; i < nb_diff_terms; i++){
 		Rule r;
 		double prob;
-		dumpstream >> r >> prob;
+		dumpstream >> prob;
+		dumpstream >> r;
 		ruleprobs[r] = prob;
 	}
 	dumpstream.close();
