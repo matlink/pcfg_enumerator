@@ -109,6 +109,10 @@ const void Pcfg::enumerate(const string &target, const double &prob_limit, const
 			pq.push(pt);
 		}
 	}
+	if (pq.size() == 0){
+		cerr << "Empty queue, threshold to high!" << endl;
+		return;
+	}
 	unordered_map<string, int> &occ = load_target(target);
 	Preterm pt;
 	Preterm newpt;
