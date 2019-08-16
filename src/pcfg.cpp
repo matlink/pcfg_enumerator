@@ -70,8 +70,8 @@ const void Pcfg::load(const string &filename){
 	dumpstream.close();
 }
 
-const void debug(const long &nb, const int &pqsize, const int &found){
-	cerr << nb << " " << pqsize << " " << found << endl;
+const void debug(const long &nb, const int &pqsize, const int &found, const double &proba){
+	cerr << nb << " " << pqsize << " " << found << " " << proba << endl;
 }
 
 unordered_map<string, int> &load_target(const string &filename){
@@ -115,7 +115,7 @@ const void Pcfg::enumerate(const string &target, const double prob_limit){
 	long nb = 0;
 	int found = 0;
 	string word;
-	debug(nb, pq.size(), found);
+	debug(nb, pq.size(), found, pq.top().proba);
 	while(pq.size()){
 		pt = pq.top();
 		pq.pop();
@@ -124,7 +124,7 @@ const void Pcfg::enumerate(const string &target, const double prob_limit){
 		nb++;
 		if (occ.find(word) != occ.end()) found += occ[word];
 		if (nb%10000 == 0){
-			debug(nb, pq.size(), found);
+			debug(nb, pq.size(), found, pt.proba);
 			found = 0;
 		}
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
