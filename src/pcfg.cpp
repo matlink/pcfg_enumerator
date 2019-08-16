@@ -83,7 +83,7 @@ unordered_map<string, int> &load_target(const string &filename){
 	return occurrences;
 }
 
-const void Pcfg::enumerate(const string &target, const double prob_limit){
+const void Pcfg::enumerate(const string &target, const double &prob_limit, const int &max_att){
 	priority_queue<Preterm> pq;
 	Ruledict ordered_rules;
 
@@ -127,6 +127,7 @@ const void Pcfg::enumerate(const string &target, const double prob_limit){
 			debug(nb, pq.size(), found, pt.proba);
 			found = 0;
 		}
+		if (max_att && nb > max_att) break;
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
@@ -135,4 +136,5 @@ const void Pcfg::enumerate(const string &target, const double prob_limit){
 			}
 		}
 	}
+	debug(nb, pq.size(), found, pt.proba);
 }

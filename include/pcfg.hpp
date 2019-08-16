@@ -20,7 +20,7 @@ public:
 	const void learn(const std::string &filename);
 	const void dump(const std::string &filename);
 	const void load(const std::string &filename);
-	const void enumerate(const std::string &target, const double prob_limit);
+	const void enumerate(const std::string &target, const double &prob_limit, const int &max_att);
 };
 
 #endif

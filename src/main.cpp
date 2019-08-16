@@ -4,12 +4,16 @@
 
 int main(int argc, char* argv[]){
 	if(argc < 3){
-		std::cout << "Usage: " << argv[0] << " learnfile targetfile [threshold]" << std::endl;
+		std::cout << "Usage: " << argv[0] << " learnfile targetfile [threshold [max attempts]]" << std::endl;
 		return EXIT_SUCCESS;
 	}
 	double pthresh = 0;
-	if (argc == 4){
-		pthresh = std::stoi(argv[3]);
+	if (argc >= 4){
+		pthresh = std::stod(argv[3]);
+	}
+	int max_att = 0;
+	if (argc >= 5){
+		max_att = std::stoi(argv[4]);
 	}
 	std::string learnfile = argv[1];
 	std::string targetfile = argv[2];
@@ -23,5 +27,5 @@ int main(int argc, char* argv[]){
 	else{
 		pcfg.load("rockyou.bin");
 	}
-	pcfg.enumerate(targetfile, pthresh);
+	pcfg.enumerate(targetfile, pthresh, max_att);
 }
