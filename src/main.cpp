@@ -9,7 +9,7 @@ int main(int argc, char* argv[]){
 	}
 	double pthresh = 0;
 	if (argc == 4){
-		pthresh = atoi(argv[4]);
+		pthresh = std::stoi(argv[3]);
 	}
 	std::string learnfile = argv[1];
 	std::string targetfile = argv[2];
