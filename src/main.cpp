@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 	}
 	int max_att = 0;
 	if (argc >= 5){
-		max_att = std::stoi(argv[4]);
+		max_att = std::stod(argv[4]);
 	}
 	std::string learnfile = argv[1];
 	std::string targetfile = argv[2];
