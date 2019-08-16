@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
 	learn = true;
 	if(learn){
 		pcfg.learn(learnfile);
-		pcfg.dump("rockyou.bin");
+		// pcfg.dump("rockyou.bin");
 	}
 	else{
 		pcfg.load("rockyou.bin");
