@@ -36,6 +36,17 @@ std::ostream& operator<<(std::ostream& os, Preterm& pt){
 	return os;
 }
 
+std::string& operator>>(Preterm& pt, std::string& word){
+	word = "";
+	for(unsigned int pivot=0; pivot < pt.structure.size(); pivot++){
+		const Base &b = pt.structure[pivot];
+		unsigned int rank = pt.ruleranks[pivot];
+		Rule r = (*pt.ordered_rules)[b][rank].first;
+		word += r.terminal;
+	}
+	return word;
+}
+
 bool operator<(const Preterm &lhs, const Preterm &rhs){
 	return lhs.proba < rhs.proba;
 }

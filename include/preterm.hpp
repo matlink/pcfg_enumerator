@@ -23,6 +23,7 @@ public:
 	Preterm(){};
 	bool operator[](const unsigned int pivot);
 	friend std::ostream& operator<<(std::ostream& os, Preterm& pt);
+	friend std::string& operator>>(Preterm& pt, std::string& word);
 	friend bool operator<(const Preterm &lhd, const Preterm &rhs);
 };
 

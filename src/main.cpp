@@ -3,11 +3,16 @@
 #include "pcfg.hpp"
 
 int main(int argc, char* argv[]){
-	if(argc < 2){
-		std::cout << "Usage: " << argv[0] << " learnfile" << std::endl;
+	if(argc < 3){
+		std::cout << "Usage: " << argv[0] << " learnfile targetfile [threshold]" << std::endl;
 		return EXIT_SUCCESS;
 	}
+	double pthresh = 0;
+	if (argc == 4){
+		pthresh = atoi(argv[4]);
+	}
 	std::string learnfile = argv[1];
+	std::string targetfile = argv[2];
 	Pcfg pcfg = Pcfg();
 	bool learn = false;
 	learn = true;
@@ -18,5 +23,5 @@ int main(int argc, char* argv[]){
 	else{
 		pcfg.load("rockyou.bin");
 	}
-	pcfg.enumerate();
+	pcfg.enumerate(targetfile, pthresh);
 }

@@ -70,7 +70,20 @@ const void Pcfg::load(const string &filename){
 	dumpstream.close();
 }
 
-const void Pcfg::enumerate(const double prob_limit){
+const void debug(const long nb, const priority_queue<Preterm> &pq, const int found){
+	cerr << nb << " " << pq.size() << " " << found << endl;
+}
+
+unordered_map<string, int> &load_target(const string &filename){
+	static unordered_map<string, int> occurrences;
+	ifstream target(filename);
+	for(string line; getline(target, line);){
+		occurrences[line]++;
+	}
+	return occurrences;
+}
+
+const void Pcfg::enumerate(const string &target, const double prob_limit){
 	priority_queue<Preterm> pq;
 	Ruledict ordered_rules;
 
@@ -96,18 +109,24 @@ const void Pcfg::enumerate(const double prob_limit){
 			pq.push(pt);
 		}
 	}
-
+	unordered_map<string, int> &occ = load_target(target);
 	Preterm pt;
 	Preterm newpt;
 	long nb = 0;
-	cerr << nb << " " << pq.size() << endl;
+	int found = 0;
+	string word;
+	debug(nb, pq, found);
 	while(pq.size()){
 		pt = pq.top();
 		pq.pop();
 		cout << pt << endl;
+		pt >> word;
 		nb++;
-		if (nb%10000 == 0)
-			cerr << nb << " " << pq.size() << endl;
+		if (occ.find(word) != occ.end()) found += occ[word];
+		if (nb%10000 == 0){
+			debug(nb, pq, found);
+			found = 0;
+		}
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
