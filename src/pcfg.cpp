@@ -8,7 +8,7 @@
 
 using namespace std;
 
-const void Pcfg::learn(const string &filename){
+void Pcfg::learn(const string &filename){
 	ifstream learnstream(filename);
 	Structure structure;
 	unordered_map<Base, int> nb_bases;
@@ -37,7 +37,7 @@ const void Pcfg::learn(const string &filename){
 	}
 }	
 
-const void Pcfg::dump(const string &filename){
+void Pcfg::dump(const string &filename){
 	ofstream dumpstream(filename);
 	dumpstream << structprobs.size() << " " << ruleprobs.size() << endl;
 	for(auto &sprob: structprobs){
@@ -49,7 +49,7 @@ const void Pcfg::dump(const string &filename){
 	dumpstream.close();
 }
 
-const void Pcfg::load(const string &filename){
+void Pcfg::load(const string &filename){
 	ifstream dumpstream(filename);
 	unsigned int nb_diff_structures;
 	unsigned int nb_diff_terms;
@@ -70,20 +70,7 @@ const void Pcfg::load(const string &filename){
 	dumpstream.close();
 }
 
-const void debug(const long &nb, const int &pqsize, const int &found, const double &proba){
-	cerr << nb << " " << pqsize << " " << found << " " << proba << endl;
-}
-
-unordered_map<string, int> &load_target(const string &filename){
-	static unordered_map<string, int> occurrences;
-	ifstream target(filename);
-	for(string line; getline(target, line);){
-		occurrences[line]++;
-	}
-	return occurrences;
-}
-
-const void Pcfg::enumerate(const string &target, const double &prob_limit, const int &max_att){
+void Pcfg::enumerate(const double &prob_limit, const int &max_att){
 	priority_queue<Preterm> pq;
 	Ruledict ordered_rules;
 
@@ -113,25 +100,17 @@ const void Pcfg::enumerate(const string &target, const double &prob_limit, const
 		cerr << "Empty queue, threshold to high!" << endl;
 		return;
 	}
-	unordered_map<string, int> &occ = load_target(target);
 	Preterm pt;
 	Preterm newpt;
 	long nb = 0;
-	int found = 0;
-	string word;
-	debug(nb, pq.size(), found, pq.top().proba);
+
 	while(pq.size()){
 		pt = pq.top();
 		pq.pop();
 		cout << pt << endl;
-		pt >> word;
 		nb++;
-		if (occ.find(word) != occ.end()) found += occ[word];
-		if (nb%10000 == 0){
-			debug(nb, pq.size(), found, pt.proba);
-			found = 0;
-		}
 		if (max_att && nb > max_att) break;
+
 		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
@@ -140,5 +119,4 @@ const void Pcfg::enumerate(const string &target, const double &prob_limit, const
 			}
 		}
 	}
-	debug(nb, pq.size(), found, pt.proba);
 }

@@ -3,8 +3,8 @@
 #include "pcfg.hpp"
 
 int main(int argc, char* argv[]){
-	if(argc < 3){
-		std::cout << "Usage: " << argv[0] << " learnfile targetfile [threshold [max attempts]]" << std::endl;
+	if(argc < 2){
+		std::cout << "Usage: " << argv[0] << " learnfile [threshold [max attempts]]" << std::endl;
 		return EXIT_SUCCESS;
 	}
 	double pthresh = 0;
@@ -20,20 +20,7 @@ int main(int argc, char* argv[]){
 		std::cerr << learnfile << " does not exist!" << std::endl;
 		return EXIT_FAILURE;
 	}
-	std::string targetfile = argv[2];
-	if(! std::ifstream(targetfile)){
-		std::cerr << targetfile << " does not exist!" << std::endl;
-		return EXIT_FAILURE;
-	}
 	Pcfg pcfg = Pcfg();
-	bool learn = false;
-	learn = true;
-	if(learn){
-		pcfg.learn(learnfile);
-		// pcfg.dump("rockyou.bin");
-	}
-	else{
-		pcfg.load("rockyou.bin");
-	}
-	pcfg.enumerate(targetfile, pthresh, max_att);
+	pcfg.learn(learnfile);
+	pcfg.enumerate(pthresh, max_att);
 }
