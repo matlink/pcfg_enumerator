@@ -18,7 +18,4 @@ bool operator!=(const Base &lhs, const Base &rhs){
 	return lhs.type != rhs.type || lhs.len != rhs.len;
 }
 
-Base::Base(char type, unsigned int len){
-	this->type = type;
-	this->len = len;
-}
+Base::Base(char type, unsigned int len) : type(type), len(len){}

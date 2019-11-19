@@ -13,13 +13,13 @@ public:
 	Base base = first;
 	std::string terminal = second;
 
-	Rule(){};
+	Rule() = default;
 	Rule(const Base &b, const std::string &t);
 
 	friend std::ostream& operator<<(std::ostream& os, const Rule& r);
 	friend std::ifstream& operator>>(std::ifstream& ifs, Rule& r);
-	bool operator==(const Rule &lhs);
-	bool operator!=(const Rule &lhs);
+	bool operator==(const Rule &lhs) const ;
+	bool operator!=(const Rule &lhs) const ;
 };
 
 

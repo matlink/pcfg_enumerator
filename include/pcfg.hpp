@@ -18,9 +18,9 @@ private:
 	void parse(const std::string &word, Structure &structure) const;
 public:
 	void learn(const std::string &filename);
-	void dump(const std::string &filename);
+	void dump(const std::string &filename) const;
 	void load(const std::string &filename);
-	void enumerate(const double &prob_limit, const int &max_att);
+	void enumerate(const double &prob_limit, const int &max_att) const;
 };
 
 #endif

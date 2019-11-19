@@ -37,7 +37,7 @@ void Pcfg::learn(const string &filename){
 	}
 }	
 
-void Pcfg::dump(const string &filename){
+void Pcfg::dump(const string &filename) const {
 	ofstream dumpstream(filename);
 	dumpstream << structprobs.size() << " " << ruleprobs.size() << endl;
 	for(auto &sprob: structprobs){
@@ -70,7 +70,7 @@ void Pcfg::load(const string &filename){
 	dumpstream.close();
 }
 
-void Pcfg::enumerate(const double &prob_limit, const int &max_att){
+void Pcfg::enumerate(const double &prob_limit, const int &max_att) const {
 	priority_queue<Preterm> pq;
 	Ruledict ordered_rules;
 

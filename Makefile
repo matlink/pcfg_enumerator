@@ -1,24 +1,21 @@
-INCLDIR	:= include
-SRCDIR	:= src
-CC      := g++
-CFLAGS  := -Wall -Wextra -pedantic -I$(INCLDIR) -O3
+INC=include
+SRC=src
+CFLAGS := -Wall -Wextra -pedantic -I$(INC) -O3
+LDFLAGS :=
+SRCS = $(wildcard $(SRC)/*.cpp)
+OBJS = $(subst $(SRC)/,, $(subst .cpp,.o, $(SRCS)))
+BIN = pcfg
 
-#Source and object files (automatic)
-SRCS = $(wildcard $(SRCDIR)/*.cpp)
-OBJS = $(subst $(SRCDIR)/,, $(subst .cpp,.o, $(SRCS)))
+all: $(BIN)
 
-# Define here your main source files separated by spaces (without suffix!)
-EXEC = pcfg
+-include $(OBJS:.o=.d)
 
-# For multiple binaries
-$(EXEC) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+%.o: $(SRC)/%.cpp
+	$(CXX) -c $(CFLAGS) $< -o $@
+	$(CXX) -MM $(CFLAGS) $< -o $(@:.o=.d)
 
-main.o: $(SRCDIR)/main.cpp
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-%.o: $(SRCDIR)/%.cpp $(INCLDIR)/%.hpp
-	$(CC) $(CFLAGS) -c -o $@ $<
+$(BIN): $(OBJS)
+	$(CXX) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 clean:
-	-rm -f *.o $(EXEC)
+	rm -f $(BIN) *.o *.d

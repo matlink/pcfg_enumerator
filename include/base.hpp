@@ -8,11 +8,11 @@
 // i.e. L8, D4, S2
 class Base: public std::pair<char, int> {
 public:
-	char type = this->first;
-	unsigned int len = this->second;
+	char type = first;
+	unsigned int len = second;
 
 	Base(char type, unsigned int len);
-	Base(){};
+	Base() = default;
 
 	friend std::ostream& operator<<(std::ostream& os, const Base& b);
 	friend std::ifstream& operator>>(std::ifstream& ifs, Base& b);

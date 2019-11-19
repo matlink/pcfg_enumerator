@@ -11,12 +11,12 @@
 // i.e. L8D4S2, ...
 class Structure: public std::vector<Base> {
 public:
-	Structure(){};
+	Structure() = default;
 	Structure(const std::string &word);
 	friend std::ostream& operator<<(std::ostream& os, const Structure& s);
 	friend std::ifstream& operator>>(std::ifstream& ifs, Structure& s);
-	bool operator==(const Structure &lhs);
-	bool operator!=(const Structure &lhs);
+	bool operator==(const Structure &lhs) const;
+	bool operator!=(const Structure &lhs) const;
 };
 
 

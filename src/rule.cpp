@@ -16,10 +16,10 @@ std::ifstream& operator>>(std::ifstream& ifs, Rule& r){
 	return ifs;
 }
 
-bool Rule::operator==(const Rule &lhs){
+bool Rule::operator==(const Rule &lhs) const {
 	return lhs.base == base && lhs.terminal == terminal;
 }
 
-bool Rule::operator!=(const Rule &lhs){
+bool Rule::operator!=(const Rule &lhs) const {
 	return !(lhs == (*this));
 }

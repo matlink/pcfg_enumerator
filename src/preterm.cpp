@@ -1,18 +1,17 @@
 #include "preterm.hpp"
 
-Preterm::Preterm(const Preterm &pt){
-	this->proba = pt.proba;
-	this->structure = pt.structure;
-	this->ordered_rules = pt.ordered_rules;
-	this->pivot = pt.pivot;
-	this->ruleranks = pt.ruleranks;
-}
+Preterm::Preterm(const Preterm &pt) :
+proba(pt.proba),
+structure(pt.structure),
+ruleranks(pt.ruleranks),
+ordered_rules(pt.ordered_rules)
+{}
 
-Preterm::Preterm(double proba, const Structure &structure, Ruledict *ordered_rules){
-	this->proba = proba;
-	this->structure = structure;
-	this->ordered_rules = ordered_rules;
-}
+Preterm::Preterm(double proba, const Structure &structure, Ruledict *ordered_rules) : 
+proba(proba),
+structure(structure),
+ordered_rules(ordered_rules)
+{}
 
 bool Preterm::operator[](const unsigned int pivot){
 	unsigned int rank = ruleranks[pivot];
@@ -26,7 +25,7 @@ bool Preterm::operator[](const unsigned int pivot){
 	return true;
 }
 
-std::ostream& operator<<(std::ostream& os, Preterm& pt){
+std::ostream& operator<<(std::ostream& os, const Preterm& pt) {
 	for(unsigned int pivot=0; pivot < pt.structure.size(); pivot++){
 		const Base &b = pt.structure[pivot];
 		unsigned int rank = pt.ruleranks[pivot];
@@ -36,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, Preterm& pt){
 	return os;
 }
 
-std::string& operator>>(Preterm& pt, std::string& word){
+std::string& operator>>(const Preterm& pt, std::string& word){
 	word = "";
 	for(unsigned int pivot=0; pivot < pt.structure.size(); pivot++){
 		const Base &b = pt.structure[pivot];
@@ -47,6 +46,6 @@ std::string& operator>>(Preterm& pt, std::string& word){
 	return word;
 }
 
-bool operator<(const Preterm &lhs, const Preterm &rhs){
+bool operator<(const Preterm &lhs, const Preterm &rhs) {
 	return lhs.proba < rhs.proba;
 }

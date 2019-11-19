@@ -40,7 +40,7 @@ std::ifstream& operator>>(std::ifstream& ifs, Structure& s){
 }
 
 // equality operators to store custom types in hashmaps.
-bool Structure::operator==(const Structure &lhs){
+bool Structure::operator==(const Structure &lhs) const {
 	if (lhs.size() != size()) return false;
 	for(unsigned int i=0; i < lhs.size(); i++){
 		if(lhs[i] != (*this)[i]) return false;
@@ -48,6 +48,6 @@ bool Structure::operator==(const Structure &lhs){
 	return true;
 }
 
-bool Structure::operator!=(const Structure &lhs){
+bool Structure::operator!=(const Structure &lhs) const {
 	return !(lhs == (*this));
 }
