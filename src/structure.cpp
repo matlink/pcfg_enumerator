@@ -1,14 +1,12 @@
 #include "structure.hpp"
 
 Structure::Structure(const std::string &word){
-	char c;
 	Base base;
 	for(unsigned short i=0; i < word.length(); i++){
-		c = word[i];
-		if 		(c >= 'a' && c <= 'z')	base.type = 'L';
-		else if (c >= 'A' && c <= 'Z') 	base.type = 'L';
-		else if (c >= '0' && c <= '9') 	base.type = 'D';
-		else					  		base.type = 'S';
+		if 		(word[i] >= 'a' && word[i] <= 'z')	base.type = 'L';
+		else if (word[i] >= 'A' && word[i] <= 'Z') 	base.type = 'L';
+		else if (word[i] >= '0' && word[i] <= '9') 	base.type = 'D';
+		else					  					base.type = 'S';
 		if (size() && base.type == back().type){
 			back().len++;
 			continue;
@@ -20,15 +18,14 @@ Structure::Structure(const std::string &word){
 
 std::ostream& operator<<(std::ostream& os, const Structure& s){
 	os << s.size() << " ";
-	std::vector<Base>::const_iterator it = s.begin();
-	for(; it != s.end(); it++){
-		os << (*it).type << " " << (*it).len << " ";
+	for(Base i : s){
+		os << i.type << " " << i.len << " ";
 	}
 	return os;
 }
 
 std::ifstream& operator>>(std::ifstream& ifs, Structure& s){
-	unsigned int size;
+	uint size;
 	ifs >> size;
 	while(size--){
 		Base b;
@@ -42,7 +39,7 @@ std::ifstream& operator>>(std::ifstream& ifs, Structure& s){
 // equality operators to store custom types in hashmaps.
 bool Structure::operator==(const Structure &lhs) const {
 	if (lhs.size() != size()) return false;
-	for(unsigned int i=0; i < lhs.size(); i++){
+	for(uint i=0; i < lhs.size(); i++){
 		if(lhs[i] != (*this)[i]) return false;
 	}
 	return true;

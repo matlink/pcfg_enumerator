@@ -13,7 +13,7 @@ void Pcfg::learn(const string &filename){
 	Structure structure;
 	unordered_map<Base, int> nb_bases;
 	unordered_map<Base, int>::const_iterator search;
-	unsigned int w_ptr;
+	uint w_ptr;
 	for (string word; getline(learnstream, word);){
 		Structure structure(word);
 		structprobs[structure]++;
@@ -22,7 +22,7 @@ void Pcfg::learn(const string &filename){
 		for(Base base: structure){
 			string terminal = word.substr(w_ptr, base.len);
 			w_ptr += base.len;
-			ruleprobs[Rule(base, terminal)]++;;
+			ruleprobs[Rule(base, terminal)]++;
 			nb_bases[base]++;
 		}
 	}
@@ -51,16 +51,16 @@ void Pcfg::dump(const string &filename) const {
 
 void Pcfg::load(const string &filename){
 	ifstream dumpstream(filename);
-	unsigned int nb_diff_structures;
-	unsigned int nb_diff_terms;
+	uint nb_diff_structures;
+	uint nb_diff_terms;
 	dumpstream >> nb_diff_structures >> nb_diff_terms;
-	for(unsigned int i=0; i < nb_diff_structures; i++){
+	for(uint i=0; i < nb_diff_structures; i++){
 		Structure s;
 		double prob;
 		dumpstream >> s >> prob;
 		structprobs[s] = prob;
 	}
-	for(unsigned int i=0; i < nb_diff_terms; i++){
+	for(uint i=0; i < nb_diff_terms; i++){
 		Rule r;
 		double prob;
 		dumpstream >> prob;
@@ -111,7 +111,7 @@ void Pcfg::enumerate(const double &prob_limit, const int &max_att) const {
 		nb++;
 		if (max_att && nb > max_att) break;
 
-		for(unsigned int pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
+		for(uint pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
 			if(newpt[pivot] && newpt.proba >= prob_limit){

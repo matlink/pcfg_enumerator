@@ -7,7 +7,7 @@
 #include "structure.hpp"
 #include "rule.hpp"
 
-typedef std::vector<unsigned int> Ruleranks;
+typedef std::vector<uint> Ruleranks;
 typedef std::unordered_map<Base, std::vector<std::pair<Rule, double>>> Ruledict;
 
 class Preterm {
@@ -19,7 +19,7 @@ public:
 	Preterm(const Preterm &pt);
 	Preterm(double proba, const Structure &structure, Ruledict *ordered_rules);
 	Preterm() = default;
-	bool operator[](const unsigned int pivot);
+	bool operator[](const uint pivot);
 	friend std::ostream& operator<<(std::ostream& os, const Preterm& pt);
 	friend std::string& operator>>(const Preterm& pt, std::string& word);
 	friend bool operator<(const Preterm &lhd, const Preterm &rhs);

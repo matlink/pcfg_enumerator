@@ -5,13 +5,16 @@
 #include <ostream>
 #include <fstream>
 
+#define uint unsigned int
+#define uchar unsigned char
+
 // i.e. L8, D4, S2
 class Base: public std::pair<char, int> {
 public:
 	char type = first;
-	unsigned int len = second;
+	uint len = second;
 
-	Base(char type, unsigned int len);
+	Base(const char& type, const uint& len);
 	Base() = default;
 
 	friend std::ostream& operator<<(std::ostream& os, const Base& b);
