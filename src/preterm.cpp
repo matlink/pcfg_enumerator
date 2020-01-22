@@ -15,7 +15,7 @@ ordered_rules(ordered_rules)
 
 bool Preterm::operator[](const uint pivot){
 	uint rank = ruleranks[pivot];
-	Base &b = structure[pivot];
+	Simple &b = structure[pivot];
 	if(rank+1 >= (*ordered_rules)[b].size()){
 		return false;
 	}
@@ -27,7 +27,7 @@ bool Preterm::operator[](const uint pivot){
 
 std::ostream& operator<<(std::ostream& os, const Preterm& pt) {
 	for(uint pivot=0; pivot < pt.structure.size(); pivot++){
-		const Base &b = pt.structure[pivot];
+		const Simple &b = pt.structure[pivot];
 		uint rank = pt.ruleranks[pivot];
 		Rule r = (*pt.ordered_rules)[b][rank].first;
 		os << r.terminal;
@@ -38,7 +38,7 @@ std::ostream& operator<<(std::ostream& os, const Preterm& pt) {
 std::string& operator>>(const Preterm& pt, std::string& word){
 	word = "";
 	for(uint pivot=0; pivot < pt.structure.size(); pivot++){
-		const Base &b = pt.structure[pivot];
+		const Simple &b = pt.structure[pivot];
 		uint rank = pt.ruleranks[pivot];
 		Rule r = (*pt.ordered_rules)[b][rank].first;
 		word += r.terminal;

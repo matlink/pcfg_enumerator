@@ -6,10 +6,10 @@
 #include <fstream>
 #include <string>
 
-#include "base.hpp"
+#include "simple.hpp"
 
 // i.e. L8D4S2, ...
-class Structure: public std::vector<Base> {
+class Structure: public std::vector<Simple> {
 public:
 	Structure() = default;
 	Structure(const std::string &word);
@@ -27,8 +27,8 @@ namespace std {
 		size_t operator()(const Structure& s) const {
 			size_t total = 0;
 			unsigned short shift = 0;
-			for(const Base &b: s){
-				total ^= (hash<Base>()(b) << shift++);
+			for(const Simple &b: s){
+				total ^= (hash<Simple>()(b) << shift++);
 			}
 			return total;
 		}

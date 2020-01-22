@@ -8,8 +8,9 @@
 #include "rule.hpp"
 
 typedef std::vector<uint> Ruleranks;
-typedef std::unordered_map<Base, std::vector<std::pair<Rule, double>>> Ruledict;
+typedef std::unordered_map<Simple, std::vector<std::pair<Rule, double>>> Ruledict;
 
+// Elements of the priority queue
 class Preterm {
 public:
 	double proba = 0;

@@ -1,7 +1,7 @@
 #include "structure.hpp"
 
 Structure::Structure(const std::string &word){
-	Base base;
+	Simple base;
 	for(unsigned short i=0; i < word.length(); i++){
 		if 		(word[i] >= 'a' && word[i] <= 'z')	base.type = 'L';
 		else if (word[i] >= 'A' && word[i] <= 'Z') 	base.type = 'L';
@@ -18,7 +18,7 @@ Structure::Structure(const std::string &word){
 
 std::ostream& operator<<(std::ostream& os, const Structure& s){
 	os << s.size() << " ";
-	for(Base i : s){
+	for(Simple i : s){
 		os << i.type << " " << i.len << " ";
 	}
 	return os;
@@ -28,7 +28,7 @@ std::ifstream& operator>>(std::ifstream& ifs, Structure& s){
 	uint size;
 	ifs >> size;
 	while(size--){
-		Base b;
+		Simple b;
 		ifs >> b.type;
 		ifs >> b.len;
 		s.push_back(b);

@@ -12,7 +12,7 @@ set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra -O3")
 
 add_executable(pcfg
-				src/base.cpp
+				src/simple.cpp
 				src/main.cpp
 				src/pcfg.cpp
 				src/preterm.cpp

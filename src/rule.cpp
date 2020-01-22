@@ -1,6 +1,6 @@
 #include "rule.hpp"
 
-Rule::Rule(const Base &b, const std::string &t){
+Rule::Rule(const Simple &b, const std::string &t){
 	base = b;
 	terminal = t;
 }

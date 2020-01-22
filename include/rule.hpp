@@ -5,16 +5,16 @@
 #include <ostream>
 #include <fstream>
 
-#include "base.hpp"
+#include "simple.hpp"
 
 // i.e. L8 -> password, ...
 class Rule {
 public:
-	Base base;
+	Simple base;
 	std::string terminal;
 
 	Rule() = default;
-	Rule(const Base &b, const std::string &t);
+	Rule(const Simple &b, const std::string &t);
 
 	friend std::ostream& operator<<(std::ostream& os, const Rule& r);
 	friend std::ifstream& operator>>(std::ifstream& ifs, Rule& r);
