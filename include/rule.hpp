@@ -8,10 +8,10 @@
 #include "base.hpp"
 
 // i.e. L8 -> password, ...
-class Rule: public std::pair<Base, std::string> {
+class Rule {
 public:
-	Base base = first;
-	std::string terminal = second;
+	Base base;
+	std::string terminal;
 
 	Rule() = default;
 	Rule(const Base &b, const std::string &t);

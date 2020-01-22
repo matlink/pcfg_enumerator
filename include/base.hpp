@@ -9,10 +9,10 @@
 #define uchar unsigned char
 
 // i.e. L8, D4, S2
-class Base: public std::pair<char, int> {
+class Base {
 public:
-	char type = first;
-	uint len = second;
+	char type;
+	uint len;
 
 	Base(const char& type, const uint& len);
 	Base() = default;
