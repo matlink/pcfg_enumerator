@@ -44,7 +44,3 @@ bool Structure::operator==(const Structure &lhs) const {
 	}
 	return true;
 }
-
-bool Structure::operator!=(const Structure &lhs) const {
-	return !(lhs == (*this));
-}
