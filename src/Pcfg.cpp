@@ -90,7 +90,7 @@ void Pcfg::enumerate(const double &prob_limit, const int &max_att) const {
 		Preterm pt(sp.second, sp.first, &ordered_rules);
 		for(const Simple &b: sp.first){
 			pt.proba *= ordered_rules[b][0].second;
-			pt.ruleranks.push_back(0);
+			pt.rule_ptrs.push_back(0);
 		}
 		if (pt.proba >= prob_limit){
 			pq.push(pt);
@@ -111,7 +111,7 @@ void Pcfg::enumerate(const double &prob_limit, const int &max_att) const {
 		nb++;
 		if (max_att && nb > max_att) break;
 
-		for(uint pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
+		for(uint pivot=pt.pivot; pivot < pt.rule_ptrs.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
 			if(newpt(pivot) && newpt.proba >= prob_limit){
