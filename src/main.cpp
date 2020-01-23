@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "pcfg.hpp"
+#include "Pcfg.hpp"
 
 int main(int argc, char* argv[]){
 	if(argc < 2){

@@ -6,7 +6,7 @@
 #include <fstream>
 #include <string>
 
-#include "simple.hpp"
+#include "Simple.hpp"
 
 // i.e. L8D4S2, ...
 class Structure: public std::vector<Simple> {

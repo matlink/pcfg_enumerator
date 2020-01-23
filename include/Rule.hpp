@@ -5,7 +5,7 @@
 #include <ostream>
 #include <fstream>
 
-#include "simple.hpp"
+#include "Simple.hpp"
 
 // i.e. L8 -> password, ...
 class Rule {

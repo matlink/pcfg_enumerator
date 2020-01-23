@@ -1,4 +1,4 @@
-#include "rule.hpp"
+#include "Rule.hpp"
 
 Rule::Rule(const Simple &b, const std::string &t){
 	base = b;

@@ -3,8 +3,8 @@
 #include <functional>
 #include <algorithm>
 #include <queue>
-#include "pcfg.hpp"
-#include "preterm.hpp"
+#include "Pcfg.hpp"
+#include "Preterm.hpp"
 
 using namespace std;
 

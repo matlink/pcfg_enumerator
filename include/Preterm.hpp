@@ -4,8 +4,8 @@
 #include <vector>
 #include <unordered_map>
 
-#include "structure.hpp"
-#include "rule.hpp"
+#include "Structure.hpp"
+#include "Rule.hpp"
 
 typedef std::vector<uint> Ruleranks;
 typedef std::unordered_map<Simple, std::vector<std::pair<Rule, double>>> Ruledict;

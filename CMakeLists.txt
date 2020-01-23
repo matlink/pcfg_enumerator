@@ -12,12 +12,12 @@ set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra -O3")
 
 add_executable(pcfg
-				src/simple.cpp
 				src/main.cpp
-				src/pcfg.cpp
-				src/preterm.cpp
-				src/rule.cpp
-				src/structure.cpp
+				src/Simple.cpp
+				src/Pcfg.cpp
+				src/Preterm.cpp
+				src/Rule.cpp
+				src/Structure.cpp
 				)
 
 # Faire parler le make.

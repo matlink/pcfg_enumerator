@@ -7,8 +7,8 @@
 #include <algorithm>
 #include <vector>
 
-#include "rule.hpp"
-#include "structure.hpp"
+#include "Rule.hpp"
+#include "Structure.hpp"
 
 class Pcfg{
 private:

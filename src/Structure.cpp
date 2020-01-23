@@ -1,4 +1,4 @@
-#include "structure.hpp"
+#include "Structure.hpp"
 
 Structure::Structure(const std::string &word){
 	Simple base;

@@ -1,4 +1,4 @@
-#include "preterm.hpp"
+#include "Preterm.hpp"
 
 Preterm::Preterm(const Preterm &pt) :
 proba(pt.proba),

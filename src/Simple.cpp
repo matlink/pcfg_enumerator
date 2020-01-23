@@ -1,4 +1,4 @@
-#include "simple.hpp"
+#include "Simple.hpp"
 
 std::ostream& operator<<(std::ostream& os, const Simple& b){
 	os << b.type << " " << b.len;
