@@ -8,12 +8,12 @@ int main(int argc, char* argv[]){
 		return EXIT_SUCCESS;
 	}
 	double pthresh = 0;
-	if (argc >= 4){
-		pthresh = std::stod(argv[3]);
+	if (argc >= 3){
+		pthresh = std::stod(argv[2]);
 	}
 	int max_att = 0;
-	if (argc >= 5){
-		max_att = std::stod(argv[4]);
+	if (argc >= 4){
+		max_att = std::stod(argv[3]);
 	}
 	std::string learnfile = argv[1];
 	if(! std::ifstream(learnfile)){
