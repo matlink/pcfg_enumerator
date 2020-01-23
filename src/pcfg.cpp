@@ -114,7 +114,7 @@ void Pcfg::enumerate(const double &prob_limit, const int &max_att) const {
 		for(uint pivot=pt.pivot; pivot < pt.ruleranks.size(); pivot++){
 			newpt = Preterm(pt);
 			newpt.pivot = pivot;
-			if(newpt[pivot] && newpt.proba >= prob_limit){
+			if(newpt(pivot) && newpt.proba >= prob_limit){
 				pq.push(newpt);
 			}
 		}

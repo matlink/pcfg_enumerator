@@ -13,7 +13,7 @@ structure(structure),
 ordered_rules(ordered_rules)
 {}
 
-bool Preterm::operator[](const uint pivot){
+bool Preterm::operator()(const uint pivot){
 	uint rank = ruleranks[pivot];
 	Simple &b = structure[pivot];
 	if(rank+1 >= (*ordered_rules)[b].size()){
