@@ -87,7 +87,7 @@ void Pcfg::enumerate(const double &prob_limit, const int &max_att) const {
     	);
 	}
 	for(auto &sp: structprobs){
-		Preterm pt(sp.second, sp.first, &ordered_rules);
+		Preterm pt(sp.second, sp.first, ordered_rules);
 		for(const Simple &b: sp.first){
 			pt.proba *= ordered_rules[b][0].second;
 			pt.rule_ptrs.push_back(0);
@@ -100,19 +100,17 @@ void Pcfg::enumerate(const double &prob_limit, const int &max_att) const {
 		cerr << "Empty queue, threshold to high!" << endl;
 		return;
 	}
-	Preterm pt;
-	Preterm newpt;
 	long nb = 0;
 
 	while(pq.size()){
-		pt = pq.top();
+		Preterm pt(pq.top());
 		pq.pop();
 		cout << pt << endl;
 		nb++;
 		if (max_att && nb > max_att) break;
 
 		for(uint pivot=pt.pivot; pivot < pt.rule_ptrs.size(); pivot++){
-			newpt = Preterm(pt);
+			Preterm newpt(pt);
 			newpt.pivot = pivot;
 			if(newpt(pivot) && newpt.proba >= prob_limit){
 				pq.push(newpt);

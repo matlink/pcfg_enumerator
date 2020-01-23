@@ -24,14 +24,14 @@ public:
 	Structure structure;
 	RulePtrs rule_ptrs;
 	Preterm(const Preterm &pt);
-	Preterm(double proba, const Structure &structure, Ruledict *ordered_rules);
-	Preterm() = default;
+	Preterm(double proba, const Structure &structure, Ruledict& ordered_rules);
+	Preterm& operator=(const Preterm&);
 	bool operator()(const uint pivot);
 	friend std::ostream& operator<<(std::ostream& os, const Preterm& pt);
 	friend std::string& operator>>(const Preterm& pt, std::string& word);
 	friend bool operator<(const Preterm &lhd, const Preterm &rhs);
 private:
-	Ruledict *ordered_rules;
+	Ruledict& ordered_rules;
 };
 
 #endif
